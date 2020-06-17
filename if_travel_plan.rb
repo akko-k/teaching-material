@@ -1,38 +1,43 @@
-plans= [
-  {plan: "沖縄旅行", price: 10000},
-  {plan: "北海道旅行",price: 20000},
-  {plan: "九州旅行",price: 15000}
+require "active_support/core_ext/numeric/conversions"
+
+plans = [
+  {destination: "沖縄旅行", price: 10000},
+  {destination: "北海道旅行",price: 20000},
+  {destination: "九州旅行",price: 15000}
 ]
 
-puts <<~TEXT
-旅行プランを選択してください
-1. 沖縄旅行（¥10,000）
-2. 北海道旅行（¥20,000）
-3. 九州旅行（¥15,000）
-TEXT
+puts "旅行プランを選択してください"
+
+plans.each.with_index(1) do|plan,i|
+puts "#{i}. #{plan[:destination]}(¥#{plan[:price].to_s(:delimited)})"
+end
 
 print "プランを選択 >"
 
-selected_plan = gets.chomp.to_i
+selected_number = gets.chomp.to_i
 
-if selected_plan == 1
-  puts "#{plans[selected_plan -1][:plan]}ですね、何人で行きますか？"
-elsif selected_plan == 2
-  puts "#{plans[selected_plan -1][:plan]}ですね、何人で行きますか？"
-else selected_plan == 3
-  puts "#{plans[selected_plan -1][:plan]}ですね、何人で行きますか？"
+selected_plan = plans[selected_number -1][:destination]
+
+if  0 < selected_number && selected_number < 4
+  puts "#{selected_plan}ですね、何人で行きますか？"
+else
+  exit
 end
 
 print "人数を入力 >"
 
 number_of_people=gets.chomp.to_i
 
-total_price = number_of_people * plans[selected_plan -1][:price]
-discounted_total_price = number_of_people * plans[selected_plan -1][:price] * 0.9
+selected_plan_price = plans[selected_number -1][:price]
+
+total_price = number_of_people * selected_plan_price
+discounted_total_price = number_of_people * selected_plan_price * 0.9
 
 if number_of_people >= 5
   puts "#{number_of_people}人以上なので10%割引となります"
-  puts "合計料金：¥#{discounted_total_price.round.to_s.reverse.gsub( /(\d{3})(?=\d)/, '\1,').reverse}"
+  puts "合計料金：¥#{discounted_total_price.round.to_s(:delimited)}"
+elsif number_of_people > 1
+  puts "合計料金：¥#{total_price.to_s(:delimited)}"
 else
-  puts "合計料金：¥#{total_price.to_s.reverse.gsub( /(\d{3})(?=\d)/, '\1,').reverse}"
+  exit
 end
