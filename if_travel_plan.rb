@@ -37,11 +37,11 @@ while true
 end
 
 total_price = number_of_people * selected_plan[:price]
-discounted_total_price = number_of_people * selected_plan[:price] * 0.9
+discounted_total_price = (total_price * 0.9).round
 
 if number_of_people >= 5
   puts "5人以上なので10%割引となります"
-  puts "合計料金：¥#{discounted_total_price.round.to_s(:delimited)}"
+  puts "合計料金：¥#{discounted_total_price.to_s(:delimited)}"
 else
-  puts "合計料金：¥#{total_price.round.to_s(:delimited)}"
+  puts "合計料金：¥#{total_price.to_s(:delimited)}"
 end
