@@ -22,8 +22,9 @@ while true
   next
 end
 
-selected_plan = plans[selected_number -1][:destination]
-puts "#{selected_plan}ですね、何人で行きますか？"
+selected_plan = plans[selected_number -1]
+
+puts "#{selected_plan[:destination]}ですね、何人で行きますか？"
 
 while true
   print "人数を入力 >"
@@ -35,13 +36,11 @@ while true
   next
 end
 
-selected_plan_price = plans[selected_number -1][:price]
-
-total_price = number_of_people * selected_plan_price
-discounted_total_price = number_of_people * selected_plan_price * 0.9
+total_price = number_of_people * selected_plan[:price]
+discounted_total_price = number_of_people * selected_plan[:price] * 0.9
 
 if number_of_people >= 5
-  puts "#{number_of_people}人以上なので10%割引となります"
+  puts "5人以上なので10%割引となります"
   puts "合計料金：¥#{discounted_total_price.round.to_s(:delimited)}"
 else
   puts "合計料金：¥#{total_price.round.to_s(:delimited)}"
